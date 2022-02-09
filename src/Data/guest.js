@@ -3,10 +3,14 @@
  * Mongo database. In architecture parlance, it is a Data Access Object.
  * It abstracts away the details of interact with the database.
  */
- const { ObjectId } = require("mongodb");
+ const { ObjectId, Collection } = require("mongodb");
  const Database = require("../lib/database");
  const logger = require("../lib/logger");
  
+ /**
+  * @typedef {string | number | ObjectId | import("bson").ObjectIdLike | Buffer | Uint8Array} MongoID
+  */
+
  /**
   * @typedef {Object} Assistance
   * @property {boolean} socSec
@@ -22,8 +26,8 @@
  
  /**
   * @typedef {Object} Guest
-  * @property {string | undefined} _id
-  * @property {string} studentID
+  * @property {MongoID} _id
+  * @property {MongoID} studentID
   * @property {boolean} resident
   * @property {string} zipCode
   * @property {boolean} unemployment
@@ -34,7 +38,7 @@
  class Guests {
    /**
     * @param {string} id
-    * @returns {Promise<Guest>}
+    * @returns
     */
    static async getOne(id) {
      try {
@@ -74,6 +78,9 @@
    }
  }
  
+/**
+* @returns {Promise<Collection<Guest>>}
+*/
  async function getGuestsCollection() {
    const database = await Database.get();
    return database.db("guests").collection("guests");
