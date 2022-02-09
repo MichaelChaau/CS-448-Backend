@@ -38,8 +38,8 @@ const config = {
 
   ENDPOINTS_DIR: path.join(ROOT_DIR, "src", "endpoints"),
 
-  // MongoDB connection string
-  MONGO_URI: process.env.MONGO_URI,
+  // MongoDB connection string, default to dev container connection if none provided
+  MONGO_URI: process.env.MONGO_URI ? process.env.MONGO_URI : "mongodb://localhost:27018",
 
   // OpenAPI schema object
   OPENAPI_SCHEMA: path.join(ROOT_DIR, 'lib', 'openapi.yaml')
