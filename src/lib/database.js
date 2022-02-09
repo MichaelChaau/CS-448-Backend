@@ -30,6 +30,7 @@ const config = require("./config");
 
 
 class Database {
+  /** @type {import("mongodb").MongoClient} */
   static #singleton;
 
   /**
