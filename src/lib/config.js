@@ -9,6 +9,8 @@
  */
 
 const path = require('path');
+const yaml = require('js-yaml');
+const { readFileSync } = require('fs');
 const ROOT_DIR = path.join(__dirname, "..", "..");
 
 /**
@@ -19,6 +21,7 @@ const ROOT_DIR = path.join(__dirname, "..", "..");
  * @property {any} MONGO_URI
  * @property {any} OPENAPI_SCHEMA
  * @property {string} ENDPOINTS_DIR
+ * @property {string} API_VERSION
  */
 
 // Define config, a simple object that contains configuration values
@@ -45,5 +48,12 @@ const config = {
   // OpenAPI schema object
   OPENAPI_SCHEMA: path.join(ROOT_DIR, 'lib', 'openapi.yaml')
 };
+
+/**
+ * Load API version directly from openapi.yaml
+ * @type {any} apiSchema
+ */
+const apiSchema = yaml.load(readFileSync(config.OPENAPI_SCHEMA, 'utf8'));
+config.API_VERSION = apiSchema.info.version;
 
 module.exports = config;

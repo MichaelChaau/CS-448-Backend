@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: GuestInfoSystemAPI
-  version: 0.3.0
+  version: 0.3.1
 paths:
   /guest/list:
     description: List all guests
@@ -65,6 +65,19 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/ServerError'
+  /version:
+    description: Get current API version number
+    get:
+      description: Gets current opperating version of the API
+      operationId: getAPIVersion
+      x-eov-operation-handler: endpoints
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIVersion'
 components:
   responses:
     BadRequest:
@@ -234,3 +247,9 @@ components:
       type: array
       items:
         type: string
+    APIVersion:
+      example: 1.2.3
+      description: Current opperating version of the API
+      nullable: false
+      pattern: '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$'
+      type: string
