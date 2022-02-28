@@ -3,8 +3,35 @@ services:
   - docker:19.03.12-dind
 
 stages:
+  - commitlint
   - build
+  - test
   - release
+
+commitlint:
+  stage: commitlint
+  image: node:12
+  rules:
+    - if: '$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH'
+  allow_failure: true
+  before_script:
+    - npm install --save-dev @commitlint/{config-conventional,cli}
+    - chmod +x commitconfig.sh
+    - ./commitconfig.sh
+  script:
+    - npx commitlint --from=$CI_COMMIT_BEFORE_SHA
+
+commitlint-default:
+  stage: commitlint
+  image: node:12
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+  before_script:
+    - npm install --save-dev @commitlint/{config-conventional,cli}
+    - chmod +x commitconfig.sh
+    - ./commitconfig.sh
+  script:
+    - npx commitlint --from=$CI_COMMIT_BEFORE_SHA
 
 variables:
   CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
