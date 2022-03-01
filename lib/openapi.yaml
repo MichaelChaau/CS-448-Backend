@@ -177,7 +177,7 @@ components:
       example: 2048
       description: student zip code (01602 if resident)
       nullable: false
-      pattern: '^\d{5}(?:[-\s]\d{4})?$'
+      pattern: ^\b\d{5}\b(?:[- ]{1}\d{4})?$
       type: string
     Unemployment:
       example: false
