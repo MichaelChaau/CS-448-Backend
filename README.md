@@ -72,6 +72,23 @@ Stopping local development
 docker-compose down
 ```
 
+## Use during development
+  ```bash
+  cd src 
+  ```
+
+  In one terminal tab, run
+  ```bash
+  npm run dev-docker
+  ```
+  
+  In a second tab, run
+  ```bash
+  npm run dev-server
+  ```
+
+  The server will run on localhost:3000 and you will be able to see server output in the other console.
+
 ## 3. Use via Docker Compose with Persistence
 
 Download and inspect/configure `docker-compose.yaml` and `docker-compose.persist.yaml`.

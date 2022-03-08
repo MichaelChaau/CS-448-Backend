@@ -1,19 +1,22 @@
 // source: https://medium.com/swlh/communicating-using-rabbitmq-in-node-js-e63a4dffc8bb
 const amqp = require('amqplib');
-const logeer = require('./logger');
+const config = require('./config');
+
+/**
+ * @type {Promise<MessageBroker>}
+ */
+let instance;
 
 class MessageBroker {
-  /**
-   * @type {Promise<MessageBroker>}
-   */
-  static instance;
 
   /**
    * Initialize connection to rabbitMQ
    */
   async init() {
-    this.connection = await amqp.connect(process.env.RABBITMQ_URL || 'amqp://localhost');
-    this.channel = await this.connection.createChannel();
+    this.connection = await amqp.connect(config.RABBITMQ_URL)
+      .catch(err => { throw err });
+    this.channel = await this.connection.createChannel()
+      .catch(err => { throw err });
   }
 
   /**
@@ -23,9 +26,9 @@ class MessageBroker {
     if (!this.instance) {
       const broker = new MessageBroker()
       //@ts-ignore
-      this.instance = broker.init();
+      this.instance = broker.init()
     }
-    return this.instance
+    return instance
   };
 
   /**
@@ -38,7 +41,8 @@ class MessageBroker {
       await this.init();
     if (!this.channel)
       throw new Error('RabbitMQ Connection failed')
-    await this.channel.assertQueue(queue, { durable: true });
+    await this.channel.assertQueue(queue, { durable: true })
+      .catch(err => { throw err });
     this.channel.sendToQueue(queue, Buffer.from(JSON.stringify(msg)))
   }
 }

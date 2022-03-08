@@ -35,7 +35,7 @@ const config = {
   ROOT_DIR: ROOT_DIR,
 
   // The port to access this app from the host.
-  HOST_BASE_URL: process.env.HOST_BASE_URL || "http://localhost:10001/",
+  HOST_BASE_URL: process.env.HOST_BASE_URL ? process.env.HOST_BASE_URL : "http://localhost:10001",
 
   // The port the server listens on.
   // @ts-ignore
@@ -44,10 +44,10 @@ const config = {
   ENDPOINTS_DIR: path.join(ROOT_DIR, "src", "endpoints"),
 
   // MongoDB connection string
-  MONGO_URI: process.env.MONGO_URI ? process.env.MONGO_URI : 'mongodb://backend-database',
+  MONGO_URI: process.env.MONGO_URI ? process.env.MONGO_URI : 'mongodb://localhost:27018',
 
-  // MongoDB connection string
-  RABBITMQ_URL: process.env.RABBITMQ_URL ? process.env.RABBITMQ_URL : 'amqp://guest:guest@rabbitmq?connection_attempts=5&retry_delay=5',
+  // RabbitMQ connection string
+  RABBITMQ_URL: process.env.RABBITMQ_URL ? process.env.RABBITMQ_URL : 'amqp://guest:guest@localhost:5672/?connection_attempts=5&retry_delay=5',
 
   // OpenAPI schema object
   OPENAPI_SCHEMA: path.join(ROOT_DIR, 'lib', 'openapi.yaml')

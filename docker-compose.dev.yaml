@@ -1,26 +1,15 @@
 version: "3.3"
 services:
 
-  backend-server:
-    image: backend-server
-    build: .
-    ports:
-      - 10001:10001
-    environment:
-      BASE_URL: http://localhost:10001/
-      MONGO_URI: mongodb://backend-database
-      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/?connection_attempts=5&retry_delay=5
-    networks:
-      - backend-network
-    depends_on:
-      - backend-database
-      - rabbitmq
-
   backend-database:
     image: mongo:4
+    ports:
+      - "27018:27018"
     networks:
       - backend-network
-
+    environment:
+      MONGO_INITDB_DATABASE: backend-database
+    command: mongod --port 27018
 
 # https://docs.docker.com/compose/compose-file/
   rabbitmq:
