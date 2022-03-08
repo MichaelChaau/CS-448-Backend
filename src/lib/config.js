@@ -44,7 +44,7 @@ const config = {
   ENDPOINTS_DIR: path.join(ROOT_DIR, "src", "endpoints"),
 
   // MongoDB connection string
-  MONGO_URI: process.env.MONGO_URI,
+  MONGO_URI: process.env.MONGO_URI ? process.env.MONGO_URI : 'mongodb://backend-database',
 
   // MongoDB connection string
   RABBITMQ_URL: process.env.RABBITMQ_URL ? process.env.RABBITMQ_URL : 'amqp://guest:guest@rabbitmq?connection_attempts=5&retry_delay=5',

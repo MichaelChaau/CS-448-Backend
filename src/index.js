@@ -16,6 +16,7 @@ const config = require('./lib/config');
 const logger = require('./lib/logger');
 const mountEndpoints = require('./lib/mount-endpoints.js');
 const { Type } = require('js-yaml');
+const MessageBroker = require('./lib/rabbitmq');
 
 async function main() {
   let app = await buildApp();
@@ -55,5 +56,14 @@ async function buildApp() {
 }
 
 main()
-  .then(() => logger.info(`Sever running on http://localhost:${config.SERVER_PORT}`))
+  .then(async () => {
+    setTimeout(async () => {
+      const broker = await MessageBroker.getInstance()
+        .catch(err => { logger.info(err) });
+      if (broker)
+        broker.send('test', { name: 'Jared ' })
+          .catch(err => { logger.info(err) });
+    }, 10000)
+    logger.info(`Sever running on http://localhost:${config.SERVER_PORT}`)
+  })
   .catch(e => logger.error(e))
