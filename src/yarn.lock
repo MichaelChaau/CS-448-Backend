@@ -25,6 +25,13 @@
   resolved "https://registry.npmjs.org/@jsdevtools/ono/-/ono-7.1.3.tgz"
   integrity sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==
 
+"@types/amqp@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@types/amqp/-/amqp-0.2.5.tgz#6b4a935a7d4f627bbf3806460f244ea977dc1462"
+  integrity sha512-kopst/gHPhQQodMpcAMxhsrMRX4Oy5simFl6+7Y3macx1/5xzHAvPECLyFjSB5mkATU56fL2HQMBKK6CQ5oAwg==
+  dependencies:
+    "@types/node" "*"
+
 "@types/body-parser@*":
   version "1.19.0"
   resolved "https://registry.npmjs.org/@types/body-parser/-/body-parser-1.19.0.tgz"
@@ -149,6 +156,13 @@ ajv@^6.12.6:
     fast-json-stable-stringify "^2.0.0"
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
+
+amqp@^0.2.7:
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/amqp/-/amqp-0.2.7.tgz#738cfc45fd9c99260b45d5fafc32ed000841e1b1"
+  integrity sha1-c4z8Rf2cmSYLRdX6/DLtAAhB4bE=
+  dependencies:
+    lodash "^4.0.0"
 
 append-field@^1.0.0:
   version "1.0.0"
@@ -632,6 +646,11 @@ lodash.zipobject@^4.1.3:
   version "4.1.3"
   resolved "https://registry.npmjs.org/lodash.zipobject/-/lodash.zipobject-4.1.3.tgz"
   integrity sha1-s5n1q6j/YqdG9peb8gshT5ZNvvg=
+
+lodash@^4.0.0:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 logform@^2.2.0:
   version "2.2.0"

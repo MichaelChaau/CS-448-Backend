@@ -18,6 +18,7 @@ const ROOT_DIR = path.join(__dirname, "..", "..");
  * @property {string} ROOT_DIR
  * @property {string} HOST_BASE_URL
  * @property {number} SERVER_PORT
+ * @property {any} RABBITMQ_URL
  * @property {any} MONGO_URI
  * @property {any} OPENAPI_SCHEMA
  * @property {string} ENDPOINTS_DIR
@@ -44,6 +45,9 @@ const config = {
 
   // MongoDB connection string
   MONGO_URI: process.env.MONGO_URI,
+
+  // MongoDB connection string
+  RABBITMQ_URL: process.env.RABBITMQ_URL ? process.env.RABBITMQ_URL : 'amqp://guest:guest@rabbitmq?connection_attempts=5&retry_delay=5',
 
   // OpenAPI schema object
   OPENAPI_SCHEMA: path.join(ROOT_DIR, 'lib', 'openapi.yaml')

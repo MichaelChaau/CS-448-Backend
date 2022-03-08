@@ -13,6 +13,7 @@
   "license": "GPL-3.0",
   "private": true,
   "dependencies": {
+    "amqp": "^0.2.7",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-openapi-validator": "^4.10.5",
@@ -22,6 +23,7 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "@types/amqp": "^0.2.5",
     "@types/cors": "^2.8.12",
     "@types/js-yaml": "^4.0.5",
     "@types/mongodb": "^4.0.7",

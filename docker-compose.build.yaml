@@ -9,6 +9,7 @@ services:
     environment:
       BASE_URL: http://localhost:10001/
       MONGO_URI: mongodb://backend-database
+      RABBITMQ_URL: 
     networks:
       - backend-network
     depends_on:
