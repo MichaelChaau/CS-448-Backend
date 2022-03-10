@@ -1,0 +1,55 @@
+GET http://localhost:3000/guest/list
+
+###
+GET http://localhost:3000/guest/1234567
+
+###
+//Trigger this PUT the first time will create new student with ID: 1234567, the second time it will update the student data
+PUT http://localhost:3000/guest/1234567 HTTP/1.1
+content-type: application/json
+
+{
+  "resident": true,
+  "zipCode": "02048",
+  "unemployment": false,
+  "assistance": {
+    "socSec": false,
+    "TANF": false,
+    "finAid": false,
+    "other": false,
+    "SNAP": false,
+    "WIC": false,
+    "breakfast": false,
+    "lunch": false,
+    "SFSP": false
+  },
+  "household": [
+    "1",
+    "4"
+  ]
+}
+
+###
+PUT http://localhost:3000/guest/1234568 HTTP/1.1
+content-type: application/json
+
+{
+  "resident": true,
+  "zipCode": "02048",
+  "unemployment": false,
+  "assistance": {
+    "socSec": false,
+    "TANF": false,
+    "finAid": false,
+    "other": false,
+    "SNAP": false,
+    "WIC": false,
+    "breakfast": false,
+    "lunch": false,
+    "SFSP": false
+  },
+  "household": [
+    "1",
+    "4"
+  ]
+}
