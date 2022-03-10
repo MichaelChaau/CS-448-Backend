@@ -13,11 +13,7 @@ const getAllGuests = {
   async handler(request, response) {
     try {
       response.status(200).send(API_VERSION);
-      const broker = await MessageBroker.getInstance()
-        .catch(err => { logger.info(err) });
-      if (broker)
-        broker.send('test', { name: 'Jared ' })
-          .catch(err => { logger.info(err) });
+      MessageBroker.sendMessage('guest-info', { name: 'Jared' });
     } catch (e) {
       logger.error("Endpoints.getAllGuests", e);
       response.status(500).json({

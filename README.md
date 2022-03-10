@@ -74,7 +74,8 @@ docker-compose down
 
 ## Use during development
   ```bash
-  cd src 
+  cd src
+  yarn
   ```
 
   In one terminal tab, run
@@ -88,6 +89,7 @@ docker-compose down
   ```
 
   The server will run on localhost:3000 and you will be able to see server output in the other console.
+  Visit http://localhost:15672 to view the RabbitMQ gui. 
 
 ## 3. Use via Docker Compose with Persistence
 

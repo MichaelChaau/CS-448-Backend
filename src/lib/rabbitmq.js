@@ -1,49 +1,52 @@
 // source: https://medium.com/swlh/communicating-using-rabbitmq-in-node-js-e63a4dffc8bb
 const amqp = require('amqplib');
+const amqplib = require('amqplib/callback_api');
 const config = require('./config');
-
-/**
- * @type {Promise<MessageBroker>}
- */
-let instance;
+const logger = require('./logger');
 
 class MessageBroker {
+  // /** @type {import('amqplib/callback_api').Connection} */
+  // static connection;
 
-  /**
-   * Initialize connection to rabbitMQ
-   */
-  async init() {
-    this.connection = await amqp.connect(config.RABBITMQ_URL)
-      .catch(err => { throw err });
-    this.channel = await this.connection.createChannel()
-      .catch(err => { throw err });
-  }
+  /** @type {import('amqplib/callback_api').Channel} */
+  static channel;
 
-  /**
-   * @return {Promise<MessageBroker>}
-   */
-  static async getInstance() {
-    if (!this.instance) {
-      const broker = new MessageBroker()
-      //@ts-ignore
-      this.instance = broker.init()
+  /** @returns {Promise<import('amqplib/callback_api').Channel>} */
+  static async getChannel() {
+    if (MessageBroker.channel === undefined) {
+      /** @type {import('amqplib/callback_api').Channel} */
+      const result = await new Promise(function (resolve, reject) {
+        amqplib.connect(config.RABBITMQ_URL, function (connectionError, connection) {
+          if (connectionError)
+            reject(connectionError)
+          connection.createChannel((channelError, channel) => {
+            if (channelError)
+              reject(channelError)
+            else {
+              resolve(channel)
+            }
+          })
+        })
+      }).catch(err => { throw err })
+      if (result)
+        this.channel = result
+      else
+        throw new Error('Connection failed, channel not created')
     }
-    return instance
-  };
+    return this.channel
+  }
 
   /**
    * Send message to queue
    * @param {String} queue Queue name
-   * @param {Object} msg Message as Buffer
+   * @param {Object} data Message as Buffer
    */
-  async send(queue, msg) {
-    if (!this.connection)
-      await this.init();
-    if (!this.channel)
-      throw new Error('RabbitMQ Connection failed')
-    await this.channel.assertQueue(queue, { durable: true })
-      .catch(err => { throw err });
-    this.channel.sendToQueue(queue, Buffer.from(JSON.stringify(msg)))
+  static async sendMessage(queue, data) {
+    const _channel = await this.getChannel()
+
+    _channel.assertQueue(queue);
+    logger.info("Queue sent")
+    _channel.sendToQueue(queue, Buffer.from(JSON.stringify(data)))
   }
 }
 

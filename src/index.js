@@ -61,7 +61,7 @@ const getServerStatus = () => {
     await Database.get()
       .then(() => mongoConnected = true)
       .catch((err) => logger.info(err))
-    await MessageBroker.getInstance()
+    await MessageBroker.getChannel()
       .then(() => rabbitConnected = true)
       .catch(err => logger.info(err))
     logger.info({
