@@ -36,21 +36,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Guest'
-        '400':
-          $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/ServerError'
     put:
       description: Modifies guest's data.
       operationId: updateGuestData
       x-eov-operation-handler: endpoints
+      requestBody:
+        description: Guest data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Guest'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Guest'
+                $ref: '#/components/schemas/GuestBody'
           headers:
             Location:
               description: URI of new item.
@@ -169,6 +174,40 @@ components:
           $ref: '#/components/schemas/Household'
       required:
         - studentID
+      type: object
+    GuestBody:
+      example:
+        resident: true
+        zipCode: 02048
+        unemployment: false
+        assistance:
+          socSec: false
+          TANF: false
+          finAid: false
+          other: false
+          SNAP: false
+          WIC: false
+          breakfast: false
+          lunch: false
+          SFSP: false
+        household:
+          - '1'
+          - '4'
+          - '10'
+      description: Put Guest body object
+      properties:
+        resident:
+          $ref: '#/components/schemas/Resident'
+        zipCode:
+          $ref: '#/components/schemas/ZipCode'
+        unemployment:
+          $ref: '#/components/schemas/Unemployment'
+        assistance:
+          $ref: '#/components/schemas/Assistance'
+        household:
+          $ref: '#/components/schemas/Household'
+      # required:
+      #   - studentID
       type: object
     GuestArray:
       type: array

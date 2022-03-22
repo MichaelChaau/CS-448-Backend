@@ -21,7 +21,6 @@ services:
     networks:
       - backend-network
 
-
 # https://docs.docker.com/compose/compose-file/
   rabbitmq:
     image: 'rabbitmq:3.6-management-alpine'
@@ -40,7 +39,29 @@ services:
       RABBITMQ_DEFAULT_PASS: "guest"
     networks:
       -  backend-network
+  
+  test-runner:
+    image: test-runner:dev
+    build: testing/test-runner
+    environment:
+      SUT_BASE_URL: http://backend-server:10001/
+      SUT_MONGO_URL: mongodb://backend-database
+      SUT_MONGO_DATABASE: guests
+      SUT_MONGO_COLLECTION: guests
+      TEST_TIMEOUT_MS: 5000
+    volumes:
+      - type: bind
+        source: ./testing/test
+        target: /usr/src/app/test
+        read_only: true
+      - type: bind
+        source: ./lib
+        target: /usr/src/app/lib
+        read_only: true
+    networks:
+      - backend-network
+    depends_on:
+      - backend-server
 
 networks:
   backend-network:
-

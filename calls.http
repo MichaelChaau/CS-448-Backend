@@ -10,7 +10,7 @@ content-type: application/json
 
 {
   "resident": true,
-  "zipCode": 2048,
+  "zipCode": "01610",
   "unemployment": false,
   "assistance": {
     "socSec": false,
@@ -35,7 +35,7 @@ content-type: application/json
 
 {
   "resident": true,
-  "zipCode": 2048,
+  "zipCode": "01603",
   "unemployment": false,
   "assistance": {
     "socSec": false,
